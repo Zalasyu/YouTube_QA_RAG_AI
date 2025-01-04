@@ -4,17 +4,15 @@ import webvtt
 
 class EnhancedPreprocessor:
     def __init__(self, nlp_model: str = "en_core_web_sm"):
-        """
-        Initialize the EnhancedPreprocessor with an NLP model.
-        Args:
-            nlp_model (str): The spaCy model to load for text preprocessing.
-        """
+        
+        #Initialize the EnhancedPreprocessor with an NLP model.
+        
         self.nlp = spacy.load(nlp_model)
 
     def _str_to_timestamp_milliseconds(self, time_str: str) -> float:
-        """
-        Convert a string in the format of "HH:MM:SS.sss" to a timestamp in milliseconds.
-        """
+        
+        #Convert a string in the format of "HH:MM:SS.sss" to a timestamp in milliseconds.
+        
         hours, minutes, seconds = time_str.split(":")
         seconds, milliseconds = seconds.split(".")
         return (
@@ -25,24 +23,15 @@ class EnhancedPreprocessor:
         )
 
     def _clean_text(self, text: str) -> str:
-        """
-        Apply NLP preprocessing to clean and tokenize the text.
-        Args:
-            text (str): Raw transcript text.
-        Returns:
-            str: Preprocessed and cleaned text.
-        """
+        #Apply NLP preprocessing to clean and tokenize the text.
+        
         doc = self.nlp(text)
         return " ".join([token.lemma_ for token in doc if not token.is_stop and not token.is_punct])
 
     def _parse_vtt_segments(self, vtt_path: str) -> List[Tuple[float, float, float, str]]:
-        """
-        Parse the WebVTT file, extract segment timings, and preprocess the text.
-        Args:
-            vtt_path (str): Path to the WebVTT file.
-        Returns:
-            List[Tuple[float, float, float, str]]: List of segment timings and preprocessed text.
-        """
+        
+        #Parse the WebVTT file, extract segment timings, and preprocess the text.
+        
         if not vtt_path:
             raise FileNotFoundError(f"Transcript file not found: {vtt_path}")
 
