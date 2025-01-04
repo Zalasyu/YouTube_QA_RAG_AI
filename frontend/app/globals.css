@@ -2,41 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #e6e8ec;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #e6e8ec;
-    --foreground: #ededed;
-  }
-}
-
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: #e6e8ec;;
 }
 
 @layer components {
-  ._inter {
-    font-family: "Inter", sans-serif;
-  }
-
-  ._monts {
-    font-family: "Montserrat", sans-serif;
-  }
-
-  ._federo {
-    font-family: "Federo", sans-serif;
-  }
-
-  ._oswald {
-    font-family: 'Oswald', sans-serif;
-  }
-
   input,
   textarea {
     border: none;
