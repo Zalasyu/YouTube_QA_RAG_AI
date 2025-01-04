@@ -13,7 +13,9 @@ langchain-community = "^0.3.14"
 webvtt-py = "^0.5.1"
 openai-whisper = "^20240930"
 fastapi = "^0.115.6"
-youtube-dl = "^2021.12.17"
+loguru = "^0.7.3"
+yt-dlp = "^2024.12.23"
+pydantic = "^2.10.4"
 
 
 [build-system]
