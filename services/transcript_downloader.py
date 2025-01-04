@@ -89,7 +89,6 @@ class TranscriptDownloader:
                     id=info_dict['id'],
                     video_url=info_dict['webpage_url'],
                     title=info_dict['title'],
-                    description=info_dict['description'],
                     video_path=str(video_path),
                     transcript_path_vtt=str(transcript_path),
                 )
