@@ -32,7 +32,7 @@ const Stage = () => {
       <div
         className={`w-[500px] ${
           thumbnailExpanded ? "h-[700px]" : "h-[100px]"
-        } mx-2 transition-all duration-200 rounded-[6px] p-1 flex-col justify-normal items-center bg-white shadow-md`}
+        } mx-2 transition-all duration-200 rounded-[6px] p-1 flex-col justify-normal items-center bg-white shadow-md relative`}
       >
         {!thumbnailExpanded && (
           <input
@@ -54,10 +54,11 @@ const Stage = () => {
         )}
 
         {thumbnailExpanded && (
-          <div className="w-full h-[40px] flex flex-row justify-center items-center rounded-[3px] bg-black/20 px-2">
+          <div className="w-[98.3%] h-[40px] flex flex-row justify-center items-center rounded-[3px] bg-black/20 px-2 absolute bottom-2">
             <FontAwesomeIcon icon={faPaperclip} className={`mx-1 opacity-30`} />
             <input
               type="text"
+              placeholder="Write a message"
               className="flex-grow px-2 bg-transparent outline-none text-white"
             />
             <FontAwesomeIcon icon={faSmile} className={`mx-1 opacity-30`}/>
