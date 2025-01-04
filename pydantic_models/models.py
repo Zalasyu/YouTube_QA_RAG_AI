@@ -28,10 +28,19 @@ class VideoModel(LanceModel):
     id: str
     video_url: str
     title: str
-    description: str
     video_path: str
-    audio_path: str = ""
     transcript_path_vtt: str = ""
-    transcript_path_text: str = ""
-    transcribed: bool = False  # default to False
-    description_path: str = ""
+    topics: list[str] = []
+
+    def __str__(self) -> str:
+        """Return a pretty formatted string representation of the video model."""
+        return (
+            f"VideoModel(\n"
+            f"  id: {self.id}\n"
+            f"  title: {self.title}\n"
+            f"  video_url: {self.video_url}\n" 
+            f"  video_path: {self.video_path}\n"
+            f"  transcript_path_vtt: {self.transcript_path_vtt}\n"
+            f"  topics: {self.topics}\n"
+            f")"
+        )
