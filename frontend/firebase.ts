@@ -24,12 +24,13 @@ import { useEffect, useState } from "react";
 import { v4 } from "uuid";
 
 const firebaseConfig = {
-  apiKey: "",
-  authDomain: "",
-  projectId: "",
-  storageBucket: "",
-  messagingSenderId: "",
-  appId: "",
+  apiKey:  process.env.API_KEY,
+  authDomain: "agency-23b74.firebaseapp.com",
+  projectId: "agency-23b74",
+  storageBucket: "agency-23b74.firebasestorage.app",
+  messagingSenderId: "904152769359",
+  appId: "1:904152769359:web:666a8b475579bd2f565b3a",
+  measurementId: "G-L7F22LJYB6"
 };
 
 const app = initializeApp(firebaseConfig);

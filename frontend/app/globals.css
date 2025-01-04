@@ -19,3 +19,33 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+@layer components {
+  ._inter {
+    font-family: "Inter", sans-serif;
+  }
+
+  ._monts {
+    font-family: "Montserrat", sans-serif;
+  }
+
+  ._federo {
+    font-family: "Federo", sans-serif;
+  }
+
+  ._oswald {
+    font-family: 'Oswald', sans-serif;
+  }
+
+  input,
+  textarea {
+    border: none;
+    resize: none;
+  }
+
+  input:focus,
+  textarea:focus {
+    outline: none;
+    background-color: transparent;
+  }
+}
