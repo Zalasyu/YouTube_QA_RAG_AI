@@ -16,6 +16,7 @@ fastapi = "^0.115.6"
 loguru = "^0.7.3"
 yt-dlp = "^2024.12.23"
 pydantic = "^2.10.4"
+transformers = "^4.47.1"
 
 
 [build-system]

@@ -1,26 +1,25 @@
 from typing import Optional
 
 from lancedb.pydantic import LanceModel, Vector
+from lancedb.embeddings import get_registry
 from pydantic import Field
 
+model = get_registry().get("huggingface").create(name='facebook/bart-base')
 
 # Define VideoSegmentData as a Pydantic model
 class VideoSegmentModel(LanceModel):
     id: int
     parent_video_id: str
     parent_video_path: str  # Changed from Path to str for compatibility with PyArrow
-    parent_audio_path: str  # Changed from Path to str for compatibility
     parent_vtt_path: str
     video_segment_path: str
     video_segment_transcript_path: str
-    frame_path: str
     transcript: str
-    enriched_transcript: str
     duration_ms: float
     start_ms: float
     mid_ms: float
     end_ms: float
-    embeddings: Vector(1536)  # type: ignore
+    embeddings: Vector(model.ndims()) = model.VectorField() # type: ignore
 
 
 # Define VideoData as a LanceModel for use with LanceDB
