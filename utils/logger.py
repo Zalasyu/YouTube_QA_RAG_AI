@@ -22,7 +22,6 @@ logger.add(
 
 logger.add(
     sink="logs/log_{time}.log",
-    rotation="100 MB",
     level="DEBUG",
     format="{time} | {level} | {name}:{function}:{line} - {message}",
     colorize=True,
