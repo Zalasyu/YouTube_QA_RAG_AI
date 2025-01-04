@@ -1,3 +1,5 @@
+"use client"
+
 import { initializeApp } from "firebase/app";
 import {
   GoogleAuthProvider,
@@ -22,6 +24,8 @@ import { getStorage } from "firebase/storage";
 import { getAnalytics } from "firebase/analytics";
 import { useEffect, useState } from "react";
 import { v4 } from "uuid";
+import dotenv from 'dotenv';
+dotenv.config();
 
 const firebaseConfig = {
   apiKey:  process.env.API_KEY,
@@ -68,11 +72,18 @@ export const signOut_ = () => {
 };
 
 export const useAuth = () => {
-  const [currentUser_, setCurrentUser_] = useState();
+  const [currentUser, setCurrentUser] = useState(null);
+  const [isUserActive, setIsUserActive] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const unsub = onAuthStateChanged(auth, (user) => setCurrentUser_(user));
-    return unsub;
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setCurrentUser(user);
+      setIsUserActive(!!user);
+      setIsLoading(false);
+    });
+    return () => unsubscribe();
   }, []);
-  return currentUser_;
+
+  return { currentUser, isUserActive, isLoading };
 };

@@ -1,12 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { findings_, teams_ } from "./findings_";
+import { findings_, teams_ } from "./sidebar_";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPaperclip,
   faSmile,
-  faMicrophone,
   faMicrophoneAlt,
 } from "@fortawesome/free-solid-svg-icons";
 
@@ -28,6 +27,7 @@ const Stage = () => {
   };
 
   return (
+    <div className="flex flex-col items-center justify-center min-h-screen">
     <div className="flex flex-row items-center justify-center scale-[.90]">
       <div
         className={`w-[500px] ${
@@ -82,6 +82,7 @@ const Stage = () => {
           </div>
         ))}
       </div>
+    </div>
     </div>
   );
 };

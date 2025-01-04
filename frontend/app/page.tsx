@@ -1,9 +1,15 @@
+"use client"
+
+import { useAuth } from "@/firebase";
+import LoginPage from "./components/auth/LoginForm";
 import Stage from "./components/Stage";
 
 export default function Home() {
+  const { currentUser, isUserActive } = useAuth();
+
   return (
-    <div className={`flex flex-col items-center justify-center min-h-screen w-full`}>
-      <Stage/>
-    </div>
+    <>
+      {isUserActive ? <Stage /> : <LoginPage />}
+    </>
   );
 }
