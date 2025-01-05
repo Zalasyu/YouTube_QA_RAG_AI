@@ -17,6 +17,9 @@ loguru = "^0.7.3"
 yt-dlp = "^2024.12.23"
 pydantic = "^2.10.4"
 transformers = "^4.47.1"
+pandas = "^2.2.3"
+langchain-huggingface = "^0.1.2"
+pyarrow = "^18.1.0"
 
 
 [build-system]

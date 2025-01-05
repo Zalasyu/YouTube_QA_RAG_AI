@@ -4,7 +4,7 @@ from lancedb.pydantic import LanceModel, Vector
 from lancedb.embeddings import get_registry
 from pydantic import Field
 
-model = get_registry().get("huggingface").create(name='facebook/bart-base')
+model = get_registry().get("huggingface").create(name='sentence-transformers/all-MiniLM-L6-v2')
 
 # Define VideoSegmentData as a Pydantic model
 class VideoSegmentModel(LanceModel):
@@ -14,12 +14,12 @@ class VideoSegmentModel(LanceModel):
     parent_vtt_path: str
     video_segment_path: str
     video_segment_transcript_path: str
-    transcript: str
-    duration_ms: float
+    page_content: str
+    metadata: dict
     start_ms: float
     mid_ms: float
     end_ms: float
-    embeddings: Vector(model.ndims()) = model.VectorField() # type: ignore
+    embeddings: Vector(model.ndims()) # type: ignore
 
 
 # Define VideoData as a LanceModel for use with LanceDB

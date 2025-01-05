@@ -59,20 +59,23 @@ class LanceDBYT(LanceDB):
             schema = pydantic_to_schema(VideoSegmentModel)
             
             # Create table if it doesn't exist
-            if self.table_name not in self.connection.table_names():
-                logger.info(f"Creating new table: {self.table_name}")
-                self.table = self.connection.create_table(
-                    self.table_name,
+            if self._table_name not in self._connection.table_names():
+                logger.info(f"Creating new table: {self._table_name}")
+                self.table = self._connection.create_table(
+                    self._table_name,
                     schema=schema,
-                    mode="create"
+                    mode="overwrite"
                 )
+                logger.info(f"Table created: {self.table}")
                 
                 # Add initial data if provided
                 if video_segments:
                     self.add_video_segments(video_segments)
             else:
-                logger.info(f"Using existing table: {self.table_name}")
-                self.table = self.connection.open_table(self.table_name)
+                logger.info(f"Using existing table: {self._table_name}")
+                self.table = self._connection.open_table(self._table_name)
+
+            return self.table
                 
         except Exception as e:
             logger.error(f"Error creating table: {e}")
@@ -85,8 +88,7 @@ class LanceDBYT(LanceDB):
             video_segments: List of video segment models to add
         """
         try:
-            if not self.table:
-                raise ValueError("Table not initialized. Call create_video_segments_table first.")
+            logger.info(f"Adding {len(video_segments)} video segments to table: {self.table}")
             
             # Convert models to dictionaries
             records = [segment.model_dump() for segment in video_segments]
@@ -94,62 +96,11 @@ class LanceDBYT(LanceDB):
             # Add to table
             self.table.add(records)
             logger.info(f"Added {len(records)} video segments to table")
+
+            return self.table
             
         except Exception as e:
             logger.error(f"Error adding video segments: {e}")
             raise
-    
-    def similarity_search_with_score(
-        self,
-        query: str,
-        k: int = 4,
-        filter_condition: Optional[str] = None
-    ) -> List[tuple[Document, float]]:
-        """Search for similar video segments.
+
         
-        Args:
-            query: Query text
-            k: Number of results
-            filter_condition: SQL-style filter condition
-            
-        Returns:
-            List of (document, score) tuples
-        """
-        try:
-            # Get embeddings for query
-            query_embedding = self.embedding.embed_query(query)
-            
-            # Build search query
-            search_query = self.table.search(query_embedding)
-            if filter_condition:
-                search_query = search_query.filter(filter_condition)
-            
-            # Execute search
-            results = search_query.limit(k).to_list()
-            
-            # Convert to documents
-            docs_and_scores = []
-            for result in results:
-                # Create metadata
-                metadata = {
-                    "video_segment_id": result["id"],
-                    "parent_video_id": result["parent_video_id"],
-                    "start_ms": result["start_ms"],
-                    "end_ms": result["end_ms"],
-                    "frame_path": result["frame_path"],
-                    "video_segment_path": result["video_segment_path"]
-                }
-                
-                # Create document
-                doc = Document(
-                    page_content=result[self.text_key],
-                    metadata=metadata
-                )
-                
-                docs_and_scores.append((doc, result["_distance"]))
-                
-            return docs_and_scores
-            
-        except Exception as e:
-            logger.error(f"Error during similarity search: {e}")
-            raise
